@@ -5,15 +5,12 @@
 
 ## Running petclinic locally
 ```
-	git clone https://github.com/spring-projects/spring-petclinic.git
+	git clone git@github.com:sidgs/spring-petclinic.git
 	cd spring-petclinic
 	./mvnw tomcat7:run
 ```
 
 You can then access petclinic here: http://localhost:9966/petclinic/
-
-## In case you find a bug/suggested improvement for Spring Petclinic
-Our issue tracker is available here: https://github.com/spring-projects/spring-petclinic/issues
 
 
 ## Database configuration
@@ -46,6 +43,7 @@ If m2e is not there, just follow the install process here: http://eclipse.org/m2
 ```
 git clone https://github.com/spring-projects/spring-petclinic.git
 ```
+
 2) Inside Eclipse
 ```
 File -> Import -> Maven -> Existing Maven project
