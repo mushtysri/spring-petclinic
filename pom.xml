@@ -360,8 +360,8 @@
                 <version>2.2</version>
                 <configuration>
                     <server>tomcat-development-server</server>
-                    <port>9966</port>
-                    <path>/petclinic</path>
+                    <port>8080</port>
+                    <path>/spring-petclinic</path>
                 </configuration>
             </plugin>
             <plugin>
