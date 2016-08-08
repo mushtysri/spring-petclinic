@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <servers>
+        <server>
+            <id>sidgsInternalMavenSnapshotRepository</id>
+            <username>admin</username>
+            <password>qwerty123</password>
+        </server>
+        <server>
+            <id>sidgsInternalMavenReleaseRepository</id>
+            <username>admin</username>
+            <password>qwerty123</password>
+        </server>
+
+    </servers>
+
+    <profiles>
+
+        <!--activate profile for releases using '-p sidgs-release' -->
+        <profile>
+            <id>sidgs-release</id>
+            <activation>
+                <property>
+                    <snapshots.distribution.url>${repository.server.root}/content/repositories/snapshots</snapshots.distribution.url>
+                </property>
+            </activation>
+            <distributionManagement>
+                <repository>
+                    <id>sidgsInternalMavenReleaseRepository</id>
+                    <name>SIDGS Releases Repository</name>
+                    <url>${releases.distribution.url}</url>
+                </repository>
+            </distributionManagement>
+
+        </profile>
+
+        <!--activate for snapshots using '-p sidgs-snapshot'-->
+        <profile>
+            <id>sidgs-snapshot</id>
+            <activation>
+                <property>
+                    <snapshots.distribution.url>${repository.server.root}/content/repositories/snapshots</snapshots.distribution.url>
+                </property>
+            </activation>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>sidgsInternalMavenSnapshotRepository</id>
+                    <name>SIDGS Snapshots Repository</name>
+                    <url>${snapshots.distribution.url}</url>
+                    <uniqueVersion>false</uniqueVersion>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+
+    </profiles>
+</settings>
