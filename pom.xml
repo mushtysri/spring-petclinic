@@ -548,7 +548,7 @@
         <profile>
             <id>snapshot</id>
                 <activation>
-                    <property><name>deploy-release</name></property>
+                    <property><name>deploy-snapshot</name></property>
                 </activation>
             <distributionManagement>
                 <snapshotRepository>
