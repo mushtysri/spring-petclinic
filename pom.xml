@@ -41,6 +41,17 @@
 
         <cobertura.version>2.7</cobertura.version>
 
+
+        <!-- Default encoding for all build plugins, avoiding OS specific encoding -->
+        <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+
+
+        <!--Lists the location of the repositories that need to be used for deploy actvity -->
+        <releases.distribution.url>${repository.server.root}/content/repositories/releases</releases.distribution.url>
+        <snapshots.distribution.url>${repository.server.root}/content/repositories/snapshots</snapshots.distribution.url>
+        <dependency.download.url>${repository.server.root}/content/groups/public</dependency.download.url>
+        <plugin.download.url>${repository.server.root}/content/groups/public</plugin.download.url>
+
     </properties>
 
     <dependencyManagement>
@@ -55,6 +66,54 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+
+    <repositories>
+
+        <!-- Only one repository is being listed as we expect the repository to
+            either host Artifacts or act as a proxy to public repositories when required -->
+        <repository>
+            <id>internalMavenRepository</id>
+            <name>Sonatype Nexus Internal</name>
+            <url>${repository.server.root}/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy> <!-- This is the default, but helps to be explicit -->
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <!-- We should never have to look for a release again, but there may
+                    be an issue if a download is interrupted, in that case we expect developers
+                    to clean up the local pom file -->
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <!-- Only one repository is being listed as we expect the repository to
+            either host Artifacts or act as a proxy to public repositories when required -->
+        <pluginRepository>
+            <id>ibxInternalPluginRepository</id>
+            <name>Sonatype Nexus Internal</name>
+            <url>${plugin.download.url}</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy> <!-- This is the default, but helps to be explicit -->
+                <checksumPolicy>ignore</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <!-- We should never have to look for a release again, but there may
+                    be an issue if a download is interrupted, in that case we expect developers
+                    to clean up the local pom file -->
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>ignore</checksumPolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencies>
         <dependency>
@@ -287,6 +346,16 @@
         </testResources>
         <plugins>
             <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.6</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>nexus</serverId>
+                    <nexusUrl>http://localhost:8081/nexus/</nexusUrl>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.0</version>
@@ -360,8 +429,8 @@
                 <version>2.2</version>
                 <configuration>
                     <server>tomcat-development-server</server>
-                    <port>8080</port>
-                    <path>/spring-petclinic</path>
+                    <port>9966</port>
+                    <path>/petclinic</path>
                 </configuration>
             </plugin>
             <plugin>
@@ -400,33 +469,33 @@
         </plugins>
     </reporting>
     <profiles>
-		<profile>
-			<id>bower-install</id>
-  			<build>
-			<plugins>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>exec-maven-plugin</artifactId>
-                    <version>1.4.0</version>
-					<executions>
-						<execution>
-							<phase>generate-sources</phase>
-							<goals>
-								<goal>exec</goal>
-							</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<executable>bower</executable>
-						<arguments>
-							<argument>install</argument>
-						</arguments>
-						<workingDirectory>${basedir}</workingDirectory>
-					</configuration>
-				</plugin>
-			</plugins>
-		  </build>
-		</profile>
+        <profile>
+            <id>bower-install</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.4.0</version>
+                        <executions>
+                            <execution>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <executable>bower</executable>
+                            <arguments>
+                                <argument>install</argument>
+                            </arguments>
+                            <workingDirectory>${basedir}</workingDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>less-install</id>
             <build>
@@ -454,7 +523,28 @@
                 </plugins>
             </build>
         </profile>
-   </profiles>
+        <profile>
+            <id>release</id>
+            <distributionManagement>
+                <repository>
+                    <id>ibxInternalMavenReleaseRepository</id>
+                    <name>FrontOffice Releases Repository</name>
+                    <url>${releases.distribution.url}</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+        <profile>
+            <id>snapshot</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>ibxInternalMavenSnapshotRepository</id>
+                    <name>FrontOffice Snapshots Repository</name>
+                    <url>${snapshots.distribution.url}</url>
+                    <uniqueVersion>false</uniqueVersion>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 
     <url>demopetclinic</url>
 </project>
