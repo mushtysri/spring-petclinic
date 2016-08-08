@@ -523,27 +523,41 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>release</id>
-            <distributionManagement>
-                <repository>
-                    <id>ibxInternalMavenReleaseRepository</id>
-                    <name>FrontOffice Releases Repository</name>
-                    <url>${releases.distribution.url}</url>
-                </repository>
-            </distributionManagement>
-        </profile>
-        <profile>
-            <id>snapshot</id>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>ibxInternalMavenSnapshotRepository</id>
-                    <name>FrontOffice Snapshots Repository</name>
-                    <url>${snapshots.distribution.url}</url>
-                    <uniqueVersion>false</uniqueVersion>
-                </snapshotRepository>
-            </distributionManagement>
-        </profile>
+
+        <!--  Release to a Nexus Repo -->
+        <!--<profile>-->
+            <!--<id>release</id>-->
+            <!--<activation>-->
+                <!--<property>-->
+                    <!--<snapshots.distribution.url>${repository.server.root}/content/repositories/snapshots</snapshots.distribution.url>-->
+                <!--</property>-->
+            <!--</activation>-->
+            <!--<distributionManagement>-->
+                <!--<repository>-->
+                    <!--<id>sidgsInternalMavenReleaseRepository</id>-->
+                    <!--<name>SIDGS Releases Repository</name>-->
+                    <!--<url>${releases.distribution.url}</url>-->
+                <!--</repository>-->
+            <!--</distributionManagement>-->
+
+        <!--</profile>-->
+
+        <!--<profile>-->
+            <!--<id>snapshot</id>-->
+            <!--<activation>-->
+                <!--<property>-->
+                    <!--<snapshots.distribution.url>${repository.server.root}/content/repositories/snapshots</snapshots.distribution.url>-->
+                <!--</property>-->
+            <!--</activation>-->
+            <!--<distributionManagement>-->
+                <!--<snapshotRepository>-->
+                    <!--<id>sidgsInternalMavenSnapshotRepository</id>-->
+                    <!--<name>SIDGS Snapshots Repository</name>-->
+                    <!--<url>${snapshots.distribution.url}</url>-->
+                    <!--<uniqueVersion>false</uniqueVersion>-->
+                <!--</snapshotRepository>-->
+            <!--</distributionManagement>-->
+        <!--</profile>-->
     </profiles>
 
     <url>demopetclinic</url>
