@@ -52,6 +52,10 @@
         <dependency.download.url>${repository.server.root}/content/groups/public</dependency.download.url>
         <plugin.download.url>${repository.server.root}/content/groups/public</plugin.download.url>
 
+        <snapshots.distribution.url>${repository.server.root}/content/repositories/snapshots</snapshots.distribution.url>
+        <snapshots.distribution.url>${repository.server.root}/content/repositories/snapshots</snapshots.distribution.url>
+
+
     </properties>
 
     <dependencyManagement>
@@ -525,39 +529,36 @@
         </profile>
 
         <!--  Release to a Nexus Repo -->
-        <!--<profile>-->
-            <!--<id>release</id>-->
-            <!--<activation>-->
-                <!--<property>-->
-                    <!--<snapshots.distribution.url>${repository.server.root}/content/repositories/snapshots</snapshots.distribution.url>-->
-                <!--</property>-->
-            <!--</activation>-->
-            <!--<distributionManagement>-->
-                <!--<repository>-->
-                    <!--<id>sidgsInternalMavenReleaseRepository</id>-->
-                    <!--<name>SIDGS Releases Repository</name>-->
-                    <!--<url>${releases.distribution.url}</url>-->
-                <!--</repository>-->
-            <!--</distributionManagement>-->
+        <profile>
+            <id>release</id>
+            <activation>
+                <property><name>deploy-release</name></property>
+            </activation>
 
-        <!--</profile>-->
+            <distributionManagement>
+                <repository>
+                    <id>sidgsInternalMavenReleaseRepository</id>
+                    <name>SIDGS Releases Repository</name>
+                    <url>${releases.distribution.url}</url>
+                </repository>
+            </distributionManagement>
 
-        <!--<profile>-->
-            <!--<id>snapshot</id>-->
-            <!--<activation>-->
-                <!--<property>-->
-                    <!--<snapshots.distribution.url>${repository.server.root}/content/repositories/snapshots</snapshots.distribution.url>-->
-                <!--</property>-->
-            <!--</activation>-->
-            <!--<distributionManagement>-->
-                <!--<snapshotRepository>-->
-                    <!--<id>sidgsInternalMavenSnapshotRepository</id>-->
-                    <!--<name>SIDGS Snapshots Repository</name>-->
-                    <!--<url>${snapshots.distribution.url}</url>-->
-                    <!--<uniqueVersion>false</uniqueVersion>-->
-                <!--</snapshotRepository>-->
-            <!--</distributionManagement>-->
-        <!--</profile>-->
+        </profile>
+
+        <profile>
+            <id>snapshot</id>
+                <activation>
+                    <property><name>deploy-release</name></property>
+                </activation>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>sidgsInternalMavenSnapshotRepository</id>
+                    <name>SIDGS Snapshots Repository</name>
+                    <url>${snapshots.distribution.url}</url>
+                    <uniqueVersion>false</uniqueVersion>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
     </profiles>
 
     <url>demopetclinic</url>
