@@ -10,11 +10,11 @@
     <packaging>war</packaging>
     
     <distributionManagement>     
-    <snapshotRepository>
-        <id>snapshots</id>
-        <name>LAPTOP-561EFD5K-snapshots</name>
-        <url>http://localhost:8081/artifactory/libs-snapshot-local</url>
-    </snapshotRepository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>LAPTOP-561EFD5K-snapshots</name>
+            <url>http://localhost:8081/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
   </distributionManagement>
 
     <properties>
